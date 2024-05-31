@@ -19,6 +19,7 @@ defined('_JEXEC') or die('Restricted access');
 		<input type="hidden" name="no_note" value="1" />
 		<input type="hidden" name="rm" value="2" />
 		<input type="hidden" name="amount" value="<?php echo $vars->amount; ?>" />
+		<input type="hidden" name="tax" value="<?php echo (isset($vars->tax) && $vars->tax) ? $vars->tax : 0; ?>" />
 		<input type="hidden" name="cmd" value="<?php echo $vars->cmd; ?>" />
 		<input type="hidden" name="lc" value="<?php echo !empty($vars->country_code)?$vars->country_code:''; ?>" />
 		<div class="form-actions">
