@@ -316,7 +316,6 @@ class PlgPaymentRazorpay extends CMSPlugin
 			'error' => $error
 		);
 
-		// Print_r($result);die;
 		return $result;
 	}
 
