@@ -8,7 +8,9 @@
 	<authorEmail></authorEmail>
 	<authorUrl></authorUrl>
 	<version>1.0</version>
-	<description>Razorpay payment plugin</description>
+	<description>
+		To use the Razorpay payment plugin, you need to set up the webhook URL on your merchant account. Please follow the format specified to configure the webhook URL correctly:	YOUR_DOMAIN/index.php?option=[COM_EXTENSION_NAME]&amp;task=payment.processpayment&amp;processor=razorpay
+	</description>
 	<files>
 		<filename plugin="razorpay">razorpay.php</filename>
 		<folder>razorpay</folder>
