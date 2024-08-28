@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright  Copyright (c) 2009-2018 TechJoomla. All rights reserved.
+ * @copyright  Copyright (c) 2009-2024 Techjoomla. All rights reserved.
  * @license    GNU General Public License version 2, or later
  */
 // No direct access
@@ -316,7 +316,6 @@ class PlgPaymentRazorpay extends CMSPlugin
 			'error' => $error
 		);
 
-		// Print_r($result);die;
 		return $result;
 	}
 

@@ -1,6 +1,6 @@
 <?php
 /**
- *  @copyright  Copyright (c) 2009-2018 TechJoomla. All rights reserved.
+ *  @copyright  Copyright (c) 2009-2024 Techjoomla. All rights reserved.
  *  @license    GNU General Public License version 2, or later
  */
 defined('_JEXEC') or die('Restricted access');

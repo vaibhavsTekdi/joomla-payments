@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright  Copyright (c) 2009-2013 TechJoomla. All rights reserved.
+ * @copyright  Copyright (c) 2009-2024 TechJoomla. All rights reserved.
  * @license    GNU General Public License version 2, or later
  */
 defined('_JEXEC') or die(';)');
