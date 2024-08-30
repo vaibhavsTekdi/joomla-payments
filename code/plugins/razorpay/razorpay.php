@@ -15,7 +15,6 @@ use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\HTML\HTMLHelper;
-use Joomla\CMS\Log\Log;
 
 require_once JPATH_SITE . '/plugins/payment/razorpay/razorpay/helper.php';
 $lang = Factory::getLanguage();
@@ -32,7 +31,7 @@ HTMLHelper::script('plugins/payment/razorpay/razorpay/media/js/checkout.js');
  */
 class PlgPaymentRazorpay extends CMSPlugin
 {
-	public $responseStatus, $apiKeyConfig, $api_key, $api_secret;
+	public $responseStatus, $apiKeyConfig, $api_key, $api_secret, $webhookSecret;
 
 	/**
 	 * Constructor
@@ -57,6 +56,8 @@ class PlgPaymentRazorpay extends CMSPlugin
 			$this->api_key = $this->params->get('api_key_live', '');
 			$this->api_secret = $this->params->get('api_secret_live', '');
 		}
+
+		$this->webhookSecret = $this->params->get('webhook_secret', '');
 
 		if ($this->api_key && $this->api_secret)
 		{
@@ -200,6 +201,7 @@ class PlgPaymentRazorpay extends CMSPlugin
 				'receipt' => $vars->order_id,
 				'notes' => [
 						'order_id' => $vars->order_id,
+						'amount' => $vars->amount,
 						'client' => $vars->client
 					]
 			]);
@@ -299,8 +301,18 @@ class PlgPaymentRazorpay extends CMSPlugin
 	 */
 	public function onTP_Processpayment($data)
 	{
-		$jinput    = Factory::getApplication()->input;
-		$componentName = $jinput->get("option", "cpg_");
+		try {
+			$razorpaySignature = isset($_SERVER['HTTP_X_RAZORPAY_SIGNATURE']) ? $_SERVER['HTTP_X_RAZORPAY_SIGNATURE'] : '';
+			$payload = file_get_contents('php://input');
+			$generatedSignature = hash_hmac('sha256', $payload, $this->webhookSecret);
+
+			if (!hash_equals($generatedSignature, $razorpaySignature)) {
+				throw new Exception(Text::_('PLG_RAZORPAY_PAYMENT_ERR_INVALID_IPN'));
+			}
+
+		} catch (Exception $e) {
+			throw new Exception(Text::_('PLG_RAZORPAY_PAYMENT_ERR_INVALID_IPN'));
+		}
 
 		$payment_status = $this->translateResponse($data['status']);
 
@@ -312,8 +324,7 @@ class PlgPaymentRazorpay extends CMSPlugin
 			'status' => $payment_status,
 			'txn_type' => $data['txn_type'],
 			'total_paid_amt' => $data['amount'] / 100,
-			'raw_data' => $data,
-			'error' => $error
+			'raw_data' => $data
 		);
 
 		return $result;
