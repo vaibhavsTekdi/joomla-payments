@@ -67,12 +67,14 @@ class PlgPaymentPaypal extends CMSPlugin
 		if ($layout == 'recurring')
 		{
 			$core_file = dirname(__FILE__) . '/' . $this->_name . '/tmpl/recurring.php';
+			$override = JPATH_BASE . '/' . 'templates' . '/' . $app->getTemplate() . '/html/plugins/' .
+			$this->_type . '/' . $this->_name . '/' . 'recurring.php';
 		}
 		else
 		{
 			$core_file = dirname(__FILE__) . '/' . $this->_name . '/tmpl/default.php';
-		$override = JPATH_BASE . '/' . 'templates' . '/' . $app->getTemplate() . '/html/plugins/' .
-		$this->_type . '/' . $this->_name . '/' . 'recurring.php';
+			$override = JPATH_BASE . '/' . 'templates' . '/' . $app->getTemplate() . '/html/plugins/' .
+			$this->_type . '/' . $this->_name . '/' . 'recurring.php';
 		}
 
 		if (File::exists($override))
