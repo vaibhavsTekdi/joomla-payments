@@ -74,7 +74,7 @@ class PlgPaymentPaypal extends CMSPlugin
 		{
 			$core_file = dirname(__FILE__) . '/' . $this->_name . '/tmpl/default.php';
 			$override = JPATH_BASE . '/' . 'templates' . '/' . $app->getTemplate() . '/html/plugins/' .
-			$this->_type . '/' . $this->_name . '/' . 'recurring.php';
+			$this->_type . '/' . $this->_name . '/' . 'default.php';
 		}
 
 		if (File::exists($override))
